@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/Vocovo/feathers-authentication-management.git"
+    "url": "git+https://github.com/Vocovo/feathers-authentication-management.git.git"
   },
   "author": {
     "name": "Feathers contributors",
@@ -25,7 +25,7 @@
   },
   "contributors": [],
   "bugs": {
-    "url": "https://github.com/feathersjs/feathers-authentication-management/issues"
+    "url": "https://github.com/Vocovo/feathers-authentication-management/issues"
   },
   "engines": {
     "node": ">= 4.6.0"
