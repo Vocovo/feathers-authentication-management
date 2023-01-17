@@ -5,7 +5,7 @@ no-param-reassign: 0, no-unused-vars: 0  */
 
 const assert = require('chai').assert;
 const bcrypt = require('bcryptjs');
-const auth = require('@feathersjs/authentication-local').hooks;
+const auth = require('@vocovo/feathers-authentication-local').hooks;
 
 const feathersStubs = require('./../test/helpers/feathersStubs');
 const authManagementService = require('../src/index');
@@ -72,8 +72,9 @@ describe('identityChange - setup', () => {
           const i = 1;
           const user = clone(db[i]);
           const email = 'b@b';
-  
-          authManagement.create({ action: 'identityChange',
+
+          authManagement.create({
+            action: 'identityChange',
             value: { user: { email: user.email }, password: user.plainPassword, changes: { email } },
           })
             .then(user => {
@@ -92,8 +93,9 @@ describe('identityChange - setup', () => {
           const i = 0;
           const user = clone(db[i]);
           const email = 'a@a';
-  
-          authManagement.create({ action: 'identityChange',
+
+          authManagement.create({
+            action: 'identityChange',
             value: { user: { email: user.email }, password: user.plainPassword, changes: { email } },
           })
             .then(user => {
@@ -112,8 +114,9 @@ describe('identityChange - setup', () => {
           const i = 0;
           const user = clone(db[i]);
           const email = 'a@a';
-  
-          authManagement.create({ action: 'identityChange',
+
+          authManagement.create({
+            action: 'identityChange',
             value: { user: { email: user.email }, password: 'ghghghg', changes: { email } },
           })
             .then(user => {
@@ -144,23 +147,25 @@ describe('identityChange - setup', () => {
           authManagementService({ notifier: spyNotifier.callWith }).call(app); // attach authManagement
           authManagement = app.service('authManagement'); // get handle to authManagement
         });
-  
+
         it('updates verified user', function (done) {
           this.timeout(9000);
           const i = 1;
           const user = clone(db[i]);
           const email = 'b@b';
-    
-          authManagement.create({ action: 'identityChange', value: {
-            user: { email: user.email }, password: user.plainPassword, changes: { email } }
+
+          authManagement.create({
+            action: 'identityChange', value: {
+              user: { email: user.email }, password: user.plainPassword, changes: { email }
+            }
           })
             .then(user1 => {
               const dbi = db[i];
-  
+
               assert.strictEqual(user1.isVerified, true, 'isVerified not true');
               assert.equal(dbi.email, user.email);
               assert.deepEqual(dbi.verifyChanges, { email });
-              
+
               assert.deepEqual(
                 spyNotifier.result()[0].args,
                 [
@@ -174,13 +179,13 @@ describe('identityChange - setup', () => {
                   {}
                 ],
               );
-        
+
               assert.strictEqual(dbi.isVerified, true, 'isVerified not false');
               assert.isString(dbi.verifyToken, 'verifyToken not String');
               assert.equal(dbi.verifyToken.length, 30, 'verify token wrong length');
               assert.equal(dbi.verifyShortToken.length, 6, 'verify short token wrong length');
               assert.match(dbi.verifyShortToken, /^[0-9]+$/);
-        
+
               done();
             })
             .catch(err => {

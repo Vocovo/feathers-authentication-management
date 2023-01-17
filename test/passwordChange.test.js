@@ -5,7 +5,7 @@ no-param-reassign: 0, no-unused-vars: 0  */
 
 const assert = require('chai').assert;
 const bcrypt = require('bcryptjs');
-const auth = require('@feathersjs/authentication-local').hooks;
+const auth = require('@vocovo/feathers-authentication-local').hooks;
 
 const feathersStubs = require('./../test/helpers/feathersStubs');
 const authManagementService = require('../src/index');
@@ -84,7 +84,7 @@ describe('passwordChange - setup', () => {
           const user = clone(db[i]);
           const paramsUser = clone(user);
           delete paramsUser.password;
-  
+
           authManagement.create({
             action: 'passwordChange',
             value: { user: { email: user.email }, oldPassword: user.plainPassword, password: user.plainNewPassword },
@@ -126,7 +126,7 @@ describe('passwordChange - setup', () => {
           this.timeout(9000);
           const i = 0;
           const user = clone(db[i]);
-  
+
           authManagement.create({
             action: 'passwordChange',
             value: { user: { email: user.email }, oldPassword: 'fdfgfghghj', password: user.plainNewPassword },
@@ -135,7 +135,7 @@ describe('passwordChange - setup', () => {
               assert.fail(true, false);
               done();
             })
-            .catch( err => {
+            .catch(err => {
               assert.isString(err.message);
               assert.isNotFalse(err.message);
               done();
@@ -166,12 +166,12 @@ describe('passwordChange - setup', () => {
           const user = clone(db[i]);
           const paramsUser = clone(user);
           delete paramsUser.password;
-  
-  
+
+
           authManagement.create({
-              action: 'passwordChange',
-              value: { user: { email: user.email }, oldPassword: user.plainPassword, password: user.plainNewPassword },
-            })
+            action: 'passwordChange',
+            value: { user: { email: user.email }, oldPassword: user.plainPassword, password: user.plainNewPassword },
+          })
             .then(user => {
               assert.strictEqual(user.isVerified, true, 'isVerified not true');
               assert.isOk(bcrypt.compareSync(db[i].plainNewPassword, db[i].password), `[${i}]`);
