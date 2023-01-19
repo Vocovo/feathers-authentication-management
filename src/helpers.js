@@ -20,6 +20,13 @@ const hashPassword = (app1, password) => {
     }
   };
 
+
+  console.log('INTERNAL HASH PASSWORD CALLED');
+
+  console.log(auth);
+
+
+
   return auth.hashPassword()(hook)
     .then(hook1 => hook1.data.password);
 };
