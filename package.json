@@ -60,7 +60,7 @@
     "@vocovo/feathers-authentication-local": "git+https://github.com/Vocovo/feathers-authentication-local.git",
     "@feathersjs/errors": "^3.2.1",
     "bcryptjs": "^2.3.0",
-    "debug": "^3.0.0",
+    "debug": "^3.1.0",
     "feathers-hooks-common": "^3.0.0"
   },
   "devDependencies": {
