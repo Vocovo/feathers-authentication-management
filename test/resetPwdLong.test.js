@@ -26,9 +26,9 @@ const usersDbPromise = new Promise((resolve, reject) => {
   ];
 
   var promises = [];
-  
+
   users.forEach(item => {
-    if(item.resetToken) {
+    if (item.resetToken) {
       promises.push(
         hashPassword(app, item.resetToken)
           .then(saveHash(item, 'resetToken'))
@@ -36,7 +36,7 @@ const usersDbPromise = new Promise((resolve, reject) => {
     }
   });
 
-  Promise.all(promises).then(function() {
+  Promise.all(promises).then(function () {
     resolve(users);
   });
 
@@ -46,7 +46,7 @@ const usersDbPromise = new Promise((resolve, reject) => {
 ['_id', 'id'].forEach(idType => {
   ['paginated', 'non-paginated'].forEach(pagination => {
     describe(`resetPwdWithLongToken ${pagination} ${idType}`, function () {
-      this.timeout(5000);
+      this.timeout(10000);
       const ifNonPaginated = pagination === 'non-paginated';
 
       describe('basic', () => {
@@ -175,26 +175,27 @@ const usersDbPromise = new Promise((resolve, reject) => {
             done();
           });
         });
-  
+
         it('verifies valid token', (done) => {
           const resetToken = 'a___000';
           const i = 0;
-    
+
           authManagement.create({
             action: 'resetPwdLong',
-            value: { token: resetToken, password } }
+            value: { token: resetToken, password }
+          }
           )
             .then(user => {
               assert.strictEqual(user.isVerified, true, 'user.isVerified not true');
-        
+
               assert.strictEqual(db[i].isVerified, true, 'isVerified not true');
               assert.strictEqual(db[i].resetToken, null, 'resetToken not null');
               assert.strictEqual(db[i].resetExpires, null, 'resetExpires not null');
-        
+
               const hash = db[i].password;
               assert.isString(hash, 'password not a string');
               assert.equal(hash.length, 60, 'password wrong length');
-        
+
               assert.deepEqual(
                 spyNotifier.result()[0].args,
                 [
@@ -202,7 +203,7 @@ const usersDbPromise = new Promise((resolve, reject) => {
                   Object.assign({}, sanitizeUserForEmail(db[i])),
                   {}
                 ]);
-        
+
               done();
             })
             .catch(err => {

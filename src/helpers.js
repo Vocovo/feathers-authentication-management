@@ -14,18 +14,11 @@ const hashPassword = (app1, password) => {
     data: { password },
     params: { provider: null },
     app: {
-      get(str) {
+      get (str) {
         return app1.get(str);
       }
     }
   };
-
-
-  console.log('INTERNAL HASH PASSWORD CALLED');
-
-  console.log(auth);
-
-
 
   return auth.hashPassword()(hook)
     .then(hook1 => hook1.data.password);
