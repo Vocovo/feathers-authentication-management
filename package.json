@@ -57,7 +57,7 @@
     "lib": "lib"
   },
   "dependencies": {
-    "@vocovo/feathers-authentication-local": "git+https://github.com/Vocovo/feathers-authentication-local.git",
+    "@vocovo/feathers-authentication-local": "git+https://github.com/Vocovo/feathers-authentication-local.git#feature/decrease-work-factor-to-14",
     "@feathersjs/errors": "^3.2.1",
     "bcryptjs": "^2.3.0",
     "debug": "^3.0.0",
